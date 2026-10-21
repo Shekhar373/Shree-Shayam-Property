@@ -1,2 +1,28 @@
 @import "tailwindcss";
 
+/* Hide scrollbar but keep scrolling */
+html, body {
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+@font-face {
+  font-family: 'heading-font';
+  src: url('/fonts/AktivGroteskEx_Trial_Rg-s.p.00nj5ihncjqfq.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
