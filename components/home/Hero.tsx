@@ -11,7 +11,7 @@ const Hero = () => {
         </h1>
      </div>
         <img
-          className="h-full w-full object-top"
+          className="h-full w-full object-cover"
           src="https://i.pinimg.com/1200x/70/aa/54/70aa54462d1eeb42679fa42c803823d6.jpg"
           alt=""
         />

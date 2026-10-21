@@ -15,10 +15,10 @@ const Navbar = () => {
         </div>
         {/* Center - Menu */}
         <div className='flex gap-8 items-center'>
-          <span className='text-sm font-medium'>Properties</span>
-          <span className='text-sm font-medium'>Our Services</span>
-          <span className='text-sm font-medium'>About</span>
-          <span className='text-sm font-medium'>Houses</span>
+          <span className='text-sm font-bold'>Properties</span>
+          <span className='text-sm font-bold'>Our Services</span>
+          <span className='text-sm font-bold'>About</span>
+          <span className='text-sm font-bold'>Houses</span>
         </div>
         {/* Right - Contact Button */}
         <div>
