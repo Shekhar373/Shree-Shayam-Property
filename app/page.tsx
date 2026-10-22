@@ -14,7 +14,7 @@ const page = () => {
       <Hero />
       <HomeProperties />
       <AboutUs />
-      <Approach />
+      {/* <Approach /> */}
       <Services />
       <InquiryPage />
       <Footer />

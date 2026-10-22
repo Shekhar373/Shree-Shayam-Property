@@ -2,8 +2,8 @@ import React from "react";
 
 const PropertyCard = () => {
   return (
-    <div className="h-[60vh] w-[25vw] bg-white rounded-4xl p-2">
-      <div className="h-[35vh] w-full rounded-4xl overflow-hidden">
+    <div className="h-[60vh] w-[25vw] bg-white rounded-3xl p-2">
+      <div className="h-[35vh] w-full rounded-3xl overflow-hidden">
         <img className="h-full w-full object-center" src="https://i.pinimg.com/1200x/0a/c5/d1/0ac5d1c4dfe0338c52bd63f2e213dea8.jpg" alt="" />
       </div>
       <div className="flex flex-col justify-around h-[25vh] w-full p-2">
@@ -17,7 +17,7 @@ const PropertyCard = () => {
        
         </div>
         <div className="flex items-center"> 
-            <h1 className="text-3xl font-bold font-[heading-font]">rs 25,000/-</h1>
+            <h1 className="text-2xl font-semibold font-[heading-font]">rs 25,000/-</h1>
             <button
                 className="mt-auto ml-auto flex h-[52px] w-[52px]
                   shrink-0 items-center justify-center rounded-full
