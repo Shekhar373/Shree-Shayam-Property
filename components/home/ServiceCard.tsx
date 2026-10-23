@@ -56,10 +56,11 @@ export default function ServiceCard() {
 
         gsap.set(card.querySelector(".card-image"), {
           scale: active ? 1 : 1.12,
+          opacity: active ? 1 : 0, // <- Set opacity 0 for non-active
         });
 
         gsap.set(card.querySelector(".card-overlay"), {
-          opacity: active ? 0.3 : 0.82,
+          opacity: active ? 0 : 0.82,
         });
 
         gsap.set(card.querySelector(".card-details"), {
@@ -86,6 +87,7 @@ export default function ServiceCard() {
 
         gsap.to(card.querySelector(".card-image"), {
           scale: active ? 1 : 1.12,
+          opacity: active ? 1 : 0, // <- Animate opacity for non-active
           duration: 1.1,
           ease: "power3.out",
           overwrite: "auto",
