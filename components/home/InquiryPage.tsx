@@ -9,7 +9,7 @@ export default function InquiryPage() {
         <Inquiryformm />
 
         {/* Property Image */}
-        <div className="group relative min-h-[400px] overflow-hidden md:min-h-[550px] lg:min-h-full">
+        <div className="group relative min-h-[400px] rounded-3xl overflow-hidden md:min-h-[550px] lg:min-h-full">
           <div data-speed='0.8'>
           <img
             src="https://i.pinimg.com/1200x/00/1a/73/001a736ab25c4c2860c028c813a34b30.jpg"

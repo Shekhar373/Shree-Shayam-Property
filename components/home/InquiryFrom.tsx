@@ -74,7 +74,7 @@ export default function Inquiryformm() {
   }
 
   return (
-    <div className="flex flex-col justify-center px-2 py-6 md:px-6 lg:py-10 bg-white">
+    <div className="flex flex-col justify-center px-2 py-6 md:px-6 lg:py-10 rounded-3xl bg-white">
       <span className="mb-5 w-fit rounded-full border border-black/10 px-4 py-2 text-xs">
         Get in touch ↗
       </span>
