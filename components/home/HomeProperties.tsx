@@ -1,28 +1,20 @@
 import React from "react";
 import HomePropertiesHeader from "./HomePropertiesHeader";
-import PropertyCard from "./PropertyCard";
 import NewPropertyCard from "./NewPropertyCard";
 
 export const HomeProperties = () => {
   return (
     <div className="h-fit w-full mb-[20vh] relative z-10 bg-[#EEF1EE]">
-      <HomePropertiesHeader />
+      {/* <HomePropertiesHeader /> */}
+      <div className="p-10 text-6xl tracking-tight">
+        <h1>Featured Properties</h1>
+      </div>
 
       <div>
         <NewPropertyCard img={"https://cdn.prod.website-files.com/69e0bb41d2ab22009f0e60c1/6a7f7f8d8121287c482aced6_project-s-9.webp"} />
         <NewPropertyCard img={"https://cdn.prod.website-files.com/69e15aa1d45aa73e62a536a8/6a778aab1f6681ee558e6866_the-den-13.webp"} />
         <NewPropertyCard img={"https://cdn.prod.website-files.com/69e15aa1d45aa73e62a536a8/69f7d28e73a47563bcdae70c_img20%201.webp"} />
       </div>
-      {/* <div className="flex overflow-x-auto space-x-8 py-8 scrollbar-thin scrollbar-thumb-zinc-300">
-          <div className="flex flex-row min-w-max gap-8">
-            <PropertyCard />
-            <PropertyCard />
-            <PropertyCard />
-            <PropertyCard />
-            <PropertyCard />
-            <PropertyCard />
-          </div>
-        </div> */}
     </div>
   );
 };

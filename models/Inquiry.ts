@@ -49,5 +49,8 @@ const InquirySchema = new Schema(
 
 InquirySchema.index({ status: 1, createdAt: -1 });
 
-export default mongoose.models.Inquiry ||
+const Inquiry =
+  mongoose.models.Inquiry ||
   mongoose.model("Inquiry", InquirySchema);
+
+export default Inquiry;

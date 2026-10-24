@@ -1,11 +1,10 @@
 import Hero from '@/components/home/Hero'
 import Services from '@/components/home/Services'
-import Approach from '@/components/home/Approach'
-import AboutUs from '@/components/home/AboutUs'
 import { HomeProperties } from '@/components/home/HomeProperties'
 import InquiryPage from '@/components/home/InquiryPage'
 import Footer from '@/components/commom/Footer'
 import About from '@/components/home/About'
+import UpperForm from '@/components/home/UpperForm'
 
 const page = () => {
   
@@ -14,12 +13,10 @@ const page = () => {
       <Hero />
       <About />
       <HomeProperties />
-      {/* <AboutUs /> */}
-      {/* <Approach /> */}
       <Services />
+      <UpperForm />
       <InquiryPage />
       <Footer />
-
     </div>
   )
 }

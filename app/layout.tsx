@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmotheScroller from "@/components/commom/SmotheScroller";
 import Navbar from "@/components/commom/Navbar";
+import SmokeCursor from "../components/commom/SmokeCursor"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col relative">
+      <SmokeCursor
+        color="#595757"
+        opacity={0.1}
+        mobile={true}
+      
+      />
+        
           {/* <Navbar /> */}
         <SmotheScroller>
         {children}

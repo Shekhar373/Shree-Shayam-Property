@@ -8,59 +8,60 @@ const AboutRight = () => {
   gsap.registerPlugin(ScrollTrigger, SplitText);
   const containerRef = useRef(null);
 
-  useGSAP(() => {
-    SplitText.create(".about-text", {
-      type: "lines",
-      mask: "lines",
-      autoSplit: true,
+  useGSAP(
+    () => {
+      SplitText.create(".about-text", {
+        type: "lines",
+        mask: "lines",
+        autoSplit: true,
 
-      onSplit(text) {
-        return gsap.from(text.lines, {
-          yPercent: 100,
-          autoAlpha: 0,
-          duration: 1.2,
-          stagger: {
-            amount: 1.2,
-          },
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 40%",
-            // markers: true,
-          },
-        });
-      },
-    });
-  },{scope: containerRef});
+        onSplit(text) {
+          return gsap.from(text.lines, {
+            yPercent: 100,
+            autoAlpha: 0,
+            duration: 1.2,
+            stagger: {
+              amount: 1.2,
+            },
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 40%",
+              // markers: true,
+            },
+          });
+        },
+      });
+    },
+    { scope: containerRef },
+  );
 
   return (
     <div ref={containerRef} className="h-full w-1/2 flex flex-col gap-10">
       <h1 className="about-text text-2xl leading-tight">
-        <span className="pl-[8vw]">Lenval</span> develops timeless landmarks
-        shaped by architecture, design and creative landscapes with a deep
-        understanding of contemporary luxury. Each project begins with a clear
-        vision - to create spaces that balance elegance, privacy and enduring
-        comfort. The result is architecture that is timeless and quietly
-        distinctive.
+        <span className="pl-[8vw]">We</span> help you discover properties that
+        reflect your lifestyle, ambitions, and vision for the future. From
+        thoughtfully designed residences to premium commercial spaces, every
+        property we present is selected with a focus on quality, location, and
+        lasting value.
       </h1>
       <div className="h-full w-full flex">
         <div className="h-full w-1/2 text-xs text-zinc-400">
           <h1 className="about-text">
-            To craft exceptional properties <br /> and refined experiences.
+            A trusted partner in finding <br /> spaces that feel like yours.
           </h1>
         </div>
         <div className="h-full w-1/2 text-sm leading-tight tracking-tight font-medium flex flex-col gap-5">
           <h1 className="about-text">
-            Lenval combines deep financial and investment expertise with a
-            refined development vision to create exceptional residential,
-            commercial, and hospitality properties. Our projects embody quality,
-            innovation, and enduring value.
+            Real estate is more than buying, selling, or renting a property. It
+            is about finding the right place to build your future.
           </h1>
           <h1 className="about-text">
-            Every development is approached with an uncompromising attention to
-            detail and a commitment to creating landmark destinations. While our
-            foundations are in Abu Dhabi, our vision is global: to develop the
-            world’s most sought-after spaces.
+            With a deep understanding of the local market and a commitment to
+            personalised service, we guide you through every step of your
+            property journey. Whether you're searching for your dream home, a
+            valuable investment, or the ideal commercial space, we make the
+            process seamless, transparent, and rewarding.
           </h1>
           <button className="w-fit">See our work</button>
         </div>
