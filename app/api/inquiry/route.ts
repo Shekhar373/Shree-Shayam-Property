@@ -1,4 +1,3 @@
-
 import dbConnect from "@/lib/connectdb";
 import Inquiry from "@/models/Inquiry";
 import { NextResponse } from "next/server";
@@ -17,7 +16,7 @@ export async function POST(request: Request) {
     ) {
       return NextResponse.json(
         { error: "Please fill in all required fields." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -37,14 +36,14 @@ export async function POST(request: Request) {
         message: "Inquiry submitted successfully!",
         inquiryId: inquiry._id,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Inquiry error:", error);
 
     return NextResponse.json(
       { error: "Failed to submit inquiry" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

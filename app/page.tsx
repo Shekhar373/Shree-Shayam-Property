@@ -10,6 +10,7 @@ const page = () => {
   
   return (
     <div className='bg-[#EEF1EE] text-[#000001]'>
+      
       <Hero />
       <About />
       <HomeProperties />

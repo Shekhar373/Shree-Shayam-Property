@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
 
 type InquiryFormFields = {
   name: string;
@@ -43,27 +44,30 @@ export default function Inquiryformm() {
     const data = { ...form };
 
     try {
-      const res = await fetch("/api/inquiry", {
-        method: "POST",
+      const res = await axios.post("/api/inquiry", data, {
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
       });
-
-      // assuming the API always returns a JSON object
-      // with either a property 'error' or the result
-      const result: { error?: string } = await res.json();
-
-      if (!res.ok) {
-        throw new Error(result.error || "something went wrong");
-      }
 
       setMessage("Inquiry submitted successfully");
       setForm(initialFormState);
     } catch (error: unknown) {
-      if (typeof error === "object" && error && "message" in error) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // Axios error handling
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error &&
+        (error as any).response &&
+        "data" in (error as any).response
+      ) {
+        const axiosError = error as any;
+        setMessage(
+          axiosError.response.data?.error ||
+          axiosError.message ||
+          "Failed to submit inquiry"
+        );
+      } else if (typeof error === "object" && error && "message" in error) {
         setMessage((error as any).message || "Failed to submit inquiry");
       } else {
         setMessage("Failed to submit inquiry");
