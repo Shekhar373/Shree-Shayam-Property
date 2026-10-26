@@ -48,19 +48,31 @@ export async function POST(request: Request) {
   }
 }
 
-
 // Created a get request for reading inquiries
-export async function GET(){
+export async function GET() {
+  try {
+    await dbConnect();
 
-  try{
+    const inquiries = await Inquiry.find({})
+      .populate("property", "title slug")
+      .sort({ createdAt: -1 })
+      .lean();
 
-    await dbConnect()
+    return NextResponse.json({
+      sucess: true,
+      inquiries,
+    });
+  } catch (error) {
+    console.error("falied to fetch inquiries", error);
 
-    const inquiries = await Inquiry.find()
-
-    
-
-  } catch(error) {
-
+    return NextResponse.json(
+      {
+        success: false,
+        message: "flaied to fetch inquiries",
+      },
+      {
+        status: 500,
+      },
+    );
   }
 }
