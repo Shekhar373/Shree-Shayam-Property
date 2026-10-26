@@ -10,16 +10,16 @@ const navigation = [
         {/* Brand */}
         <div className="mb-10 flex items-center gap-3 px-2">
           <div className="grid size-11 place-items-center rounded-xl bg-[#d6e5c9] text-2xl text-[#1d3026]">
-            A
+            S
           </div>
   
           <div>
             <h2 className="text-lg font-semibold tracking-[0.15em]">
-              ATELIER
+              ShreeShayam
             </h2>
   
             <p className="mt-1 text-[9px] tracking-[0.25em] text-white/50">
-              REALTY MANAGEMENT
+              PROPERTY MANAGEMENT
             </p>
           </div>
         </div>

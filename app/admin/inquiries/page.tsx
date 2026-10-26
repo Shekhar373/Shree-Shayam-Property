@@ -154,14 +154,14 @@ export default function AdminInquiriesPage() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            {/* <div className="flex flex-col gap-3 sm:flex-row">
               <input
                 type="search"
                 placeholder="Search inquiries..."
                 className="w-full rounded-xl border border-[#e2e7df] bg-[#fcfdfb] px-4 py-2.5 text-sm outline-none placeholder:text-[#a0aaa0] focus:border-[#536e59] sm:w-56"
               />
 
-              <select
+               <select
                 defaultValue="all"
                 className="rounded-xl border border-[#e2e7df] bg-white px-4 py-2.5 text-sm text-[#526252] outline-none focus:border-[#536e59]"
               >
@@ -171,8 +171,8 @@ export default function AdminInquiriesPage() {
                 <option value="interested">Interested</option>
                 <option value="closed">Closed</option>
                 <option value="spam">Spam</option>
-              </select>
-            </div>
+              </select> 
+            </div> */}
           </div>
 
           <div className="overflow-x-auto">
@@ -248,7 +248,7 @@ export default function AdminInquiriesPage() {
           </div>
 
           {/* Pagination UI */}
-          <div className="flex flex-col gap-4 border-t border-[#edf0e9] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          {/* <div className="flex flex-col gap-4 border-t border-[#edf0e9] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
             <p className="text-xs text-[#899487]">
               Showing 1–{inquiries.length} of {totalCount} inquiries
             </p>
@@ -282,7 +282,7 @@ export default function AdminInquiriesPage() {
                 Next →
               </button>
             </div>
-          </div>
+          </div> */}
         </section>
 
         <footer className="py-6 text-center text-xs text-[#929b91]">
