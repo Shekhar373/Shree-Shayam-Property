@@ -153,7 +153,9 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-5 border-t border-black/10 pt-6 text-xs text-black/50 md:flex-row md:items-center md:justify-between">
           <p>
-            © {new Date().getFullYear()} HomeKey Realty. All rights reserved.
+            ©
+             {/* {new Date().getFullYear()} */}
+             HomeKey Realty. All rights reserved.
           </p>
 
           <div className="flex flex-wrap gap-x-6 gap-y-3">

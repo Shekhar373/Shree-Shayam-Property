@@ -47,3 +47,20 @@ export async function POST(request: Request) {
     );
   }
 }
+
+
+// Created a get request for reading inquiries
+export async function GET(){
+
+  try{
+
+    await dbConnect()
+
+    const inquiries = await Inquiry.find()
+
+    
+
+  } catch(error) {
+
+  }
+}

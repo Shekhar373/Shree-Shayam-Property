@@ -30,6 +30,7 @@ const initialFormData: PropertyFormData = {
   images: [],
   status: "draft",
   featured: false,
+  publishedAt: ""
 };
 
 const inputClass =
@@ -205,10 +206,10 @@ export default function AddPropertyPage() {
         <div className="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
           <div>
             <Link
-              href="/admin/properties"
+              href="/admin"
               className="mb-4 inline-flex items-center gap-2 text-sm text-gray-500 transition hover:text-emerald-700"
             >
-              <span aria-hidden="true">←</span> Back to properties
+              <span aria-hidden="true">←</span> Back to admin page
             </Link>
 
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
