@@ -6,7 +6,9 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const properties = await Property.find();
+    const properties = await Property.find({})
+    .sort({ createdAt: -1})
+    .lean();
 
     return NextResponse.json(
       {

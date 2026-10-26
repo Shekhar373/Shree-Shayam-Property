@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/connectdb";
 import Inquiry from "@/models/Inquiry";
+import Property from "@/models/Property";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -53,26 +54,29 @@ export async function GET() {
   try {
     await dbConnect();
 
+    void Property;
+
     const inquiries = await Inquiry.find({})
       .populate("property", "title slug")
       .sort({ createdAt: -1 })
       .lean();
 
     return NextResponse.json({
-      sucess: true,
+      success: true,
       inquiries,
     });
   } catch (error) {
-    console.error("falied to fetch inquiries", error);
+    console.error("Failed to fetch inquiries:", error);
 
     return NextResponse.json(
       {
         success: false,
-        message: "flaied to fetch inquiries",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch inquiries",
       },
-      {
-        status: 500,
-      },
+      { status: 500 }
     );
   }
 }

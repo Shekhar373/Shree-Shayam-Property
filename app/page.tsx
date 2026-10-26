@@ -9,7 +9,7 @@ import UpperForm from '@/components/home/UpperForm'
 const page = () => {
   
   return (
-    <div className='bg-[#EEF1EE] text-[#000001]'>
+    <div className='bg-[#EEF1EE] text-[#000001] overflow-hidden'>
       
       <Hero />
       <About />

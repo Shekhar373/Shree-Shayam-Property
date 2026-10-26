@@ -27,12 +27,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col relative">
-      <SmokeCursor
+      {/* <SmokeCursor
         color="#595757"
         opacity={0.1}
         mobile={true}
       
-      />
+      /> */}
         
           {/* <Navbar /> */}
         <SmotheScroller>

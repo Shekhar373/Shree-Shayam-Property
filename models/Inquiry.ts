@@ -1,5 +1,6 @@
 // models/Inquiry.ts
 import mongoose, { Schema } from "mongoose";
+import Property from "@/models/Property";
 
 const InquirySchema = new Schema(
   {

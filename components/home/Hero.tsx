@@ -2,23 +2,24 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div data-speed="0.3" className="h-screen w-full">
+    <section
+      data-speed="0.3"
+      className="relative h-[60vh] sm:h-[80vh] md:h-screen w-full overflow-hidden flex items-center justify-center"
+    >
+      <video
+        autoPlay
+        muted
+        loop
+        className="absolute top-0 left-0 z-0 h-full w-full object-cover"
+        src="https://assets.lenvalproperties.com/projects/project-j_src.mp4"
+      />
 
-      <video  autoPlay muted loop className="h-full -w-full object-cover absolute top-0 z-0" src="https://assets.lenvalproperties.com/projects/project-j_src.mp4"></video>
-      {/* <div className=" h-[80vh] rounded-4xl overflow-hidden mt-15 relative">
-
-     <div className="absolute top-10 left-20 font-[heading-font] text-5xl">
-     <h1 className="mix-blend-difference text-white">
-          Find Your Perfect <br /> Place To Call Home
+      <div className="relative z-10 flex flex-col items-center justify-center w-full px-4 sm:px-8">
+        <h1 className="text-center text-white font-bold font-[heading-font] text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl drop-shadow-lg mix-blend-difference">
+          Find Your Perfect <br className="hidden sm:block" /> Place To Call Home
         </h1>
-     </div>
-        <img
-          className="h-full w-full object-cover"
-          src="https://i.pinimg.com/1200x/70/aa/54/70aa54462d1eeb42679fa42c803823d6.jpg"
-          alt=""
-        />
-      </div> */}
-    </div>
+      </div>
+    </section>
   );
 };
 
