@@ -26,8 +26,8 @@ const AboutRight = () => {
             ease: "power3.out",
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 40%",
-              // markers: true,
+              // markers:true,
+              start: "top 75%",
             },
           });
         },
@@ -39,48 +39,38 @@ const AboutRight = () => {
   return (
     <div
       ref={containerRef}
-      className="
-        h-full w-full flex flex-col gap-10
-        sm:w-2/3 
-        md:w-1/2
-        px-4 sm:px-8 md:px-0
-        min-h-[400px]
-      "
+      className="flex min-w-0 w-full flex-col justify-between gap-8 sm:gap-10 lg:w-1/2 lg:gap-12"
     >
-      <h1
-        className="
-          about-text text-lg sm:text-xl md:text-2xl leading-tight
-          "
-      >
-        <span className="pl-4 sm:pl-[6vw] md:pl-[8vw]">We</span> help you discover properties that
-        reflect your lifestyle, ambitions, and vision for the future. From
-        thoughtfully designed residences to premium commercial spaces, every
-        property we present is selected with a focus on quality, location, and
-        lasting value.
-      </h1>
-      <div
-        className="
-          flex flex-col md:flex-row h-full w-full gap-6 md:gap-0
-      "
-      >
-        <div className="h-full w-full md:w-1/2 text-xs sm:text-sm text-zinc-400 mb-5 md:mb-0 flex items-start">
-          <h1 className="about-text">
-            A trusted partner in finding <br className="hidden sm:inline" /> spaces that feel like yours.
-          </h1>
+      <h2 className="about-text text-base leading-tight sm:text-lg md:text-xl lg:text-2xl lg:leading-tight">
+        <span className="inline-block pl-3 sm:pl-10 md:pl-16 lg:pl-[6vw]">
+          We
+        </span>{" "}
+        help you discover properties that reflect your lifestyle, ambitions, and
+        vision for the future. From thoughtfully designed residences to premium
+        commercial spaces, every property we present is selected with a focus on
+        quality, location, and lasting value.
+      </h2>
+
+      <div className="flex w-full min-w-0 flex-col gap-6 sm:gap-8 lg:flex-row lg:gap-8">
+        <div className="w-full shrink-0 text-xs leading-relaxed text-zinc-400 sm:text-sm lg:w-2/5">
+          <p className="about-text">
+            A trusted partner in finding spaces that feel like yours.
+          </p>
         </div>
-        <div className="h-full w-full md:w-1/2 text-sm sm:text-base leading-tight tracking-tight font-medium flex flex-col gap-5">
-          <h1 className="about-text">
+
+        <div className="flex w-full min-w-0 flex-col gap-4 text-sm leading-tight tracking-tight sm:gap-5 lg:w-3/5 lg:leading-tight">
+          <p className="about-text">
             Real estate is more than buying, selling, or renting a property. It
             is about finding the right place to build your future.
-          </h1>
-          <h1 className="about-text">
+          </p>
+          <p className="about-text">
             With a deep understanding of the local market and a commitment to
             personalised service, we guide you through every step of your
-            property journey. Whether you're searching for your dream home, a
-            valuable investment, or the ideal commercial space, we make the
+            property journey. Whether you&apos;re searching for your dream home,
+            a valuable investment, or the ideal commercial space, we make the
             process seamless, transparent, and rewarding.
-          </h1>
-          <button className="w-fit px-4 py-2 rounded bg-[#e6ece3] text-[#222] hover:bg-[#c9d2c5] transition-colors text-xs sm:text-sm mt-2">
+          </p>
+          <button className="mt-1 w-full rounded bg-[#e6ece3] px-4 py-2.5 text-xs text-[#222] transition-colors hover:bg-[#c9d2c5] sm:w-fit sm:text-sm">
             See our work
           </button>
         </div>

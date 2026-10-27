@@ -4,7 +4,7 @@ import AboutRight from "./AboutRight";
 
 const About = () => {
   return (
-    <div className="h-screen relative z-10 w-full bg-[#EEF1EE] flex p-10">
+    <div className="relative z-10 flex h-fit lg:h-screen w-full flex-col gap-8 bg-[#EEF1EE] p-5 sm:p-8 lg:flex-row lg:items-start lg:gap-12 lg:p-10">
       <AboutLeft />
       <AboutRight />
     </div>
