@@ -3,7 +3,7 @@ import NewPropertyCard from "./NewPropertyCard";
 
 export const HomeProperties = () => {
   return (
-    <div className="h-fit w-full mb-[20vh] relative z-10 bg-[#EEF1EE]">
+    <div className="h-fit w-full mb-[10vh] relative z-10 bg-[#EEF1EE]">
       <div className="p-5 lg:p-10 text-2xl lg:text-6xl tracking-tight">
         <h1>Featured Properties</h1>
       </div>

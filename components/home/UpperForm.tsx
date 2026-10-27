@@ -2,13 +2,16 @@ import React from "react";
 
 const UpperForm = () => {
   return (
-    <div className="h-[180vh] w-full mt-[10vh] overflow-hidden">
-      <div data-speed="0.8" >
+    <div className="h-screen w-full mt-[10vh] relative overflow-hidden">
+      <div data-speed="0.85" >
         <img
           className="h-[110%] w-full object-cover"
-          src="https://cdn.prod.website-files.com/69e0bb41d2ab22009f0e60c1/6a6f537b8860947ad7bbfc1f_project-j-3.webp"
+          src="https://cdn.prod.website-files.com/69e15aa1d45aa73e62a536a8/69f7d28e73a47563bcdae70c_img20%201.webp"
           alt=""
         />
+      </div>
+      <div className="absolute top-0 h-screen w-full">
+        <h1></h1>
       </div>
     </div>
   );

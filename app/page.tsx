@@ -5,6 +5,7 @@ import InquiryPage from '@/components/home/InquiryPage'
 import Footer from '@/components/commom/Footer'
 import About from '@/components/home/About'
 import UpperForm from '@/components/home/UpperForm'
+import WhyChooseUs from '@/components/home/WhyChooseUs'
 
 const page = () => {
   
@@ -16,6 +17,7 @@ const page = () => {
       <HomeProperties />
       <Services />
       <UpperForm />
+      <WhyChooseUs />
       <InquiryPage />
       <Footer />
     </div>
