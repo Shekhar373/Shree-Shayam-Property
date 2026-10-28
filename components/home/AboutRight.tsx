@@ -58,7 +58,7 @@ const AboutRight = () => {
           </p>
         </div>
 
-        <div className="flex w-full min-w-0 flex-col gap-4 text-sm leading-tight tracking-tight sm:gap-5 lg:w-3/5 lg:leading-tight">
+        <div className="flex w-full min-w-0 flex-col gap-4 text-sm leading-snug tracking-tight sm:gap-5 lg:w-3/5 lg:leading-tight">
           <p className="about-text">
             Real estate is more than buying, selling, or renting a property. It
             is about finding the right place to build your future.
@@ -70,7 +70,7 @@ const AboutRight = () => {
             a valuable investment, or the ideal commercial space, we make the
             process seamless, transparent, and rewarding.
           </p>
-          <button className="mt-1 w-full rounded bg-[#e6ece3] px-4 py-2.5 text-xs text-[#222] transition-colors hover:bg-[#c9d2c5] sm:w-fit sm:text-sm">
+          <button className="px-5 py-3 bg-black text-white w-fit">
             See our work
           </button>
         </div>

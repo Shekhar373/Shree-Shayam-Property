@@ -39,7 +39,7 @@ export default function Footer() {
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white">
                 <KeyRound size={19} strokeWidth={2} />
               </span>
-              <span className="text-lg font-[heading-font] font-bold tracking-tight">
+              <span className="text-lg font-medium">
                  ShreeShayam
               </span>
             </Link>

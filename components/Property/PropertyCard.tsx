@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { MapPin, BedDouble, Bath, Maximize } from "lucide-react";
+import { PropertyTypeData } from "@/types/PropertyType";
 
-export default function PropertyCard(props) {
+export default function PropertyCard(props:PropertyTypeData) {
   const property = props;
   const formattedPrice = new Intl.NumberFormat("en-IN", {
     maximumFractionDigits: 2,
@@ -87,24 +88,24 @@ export default function PropertyCard(props) {
 
         {/* Amenities */}
         <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 text-xs text-[#555752]">
-          {property.bedrooms !== undefined && property.bedrooms !== null && (
+          {property.specifications.bedrooms !== undefined && property.specifications.bedrooms !== null && (
             <span className="flex items-center gap-1.5">
               <BedDouble size={17} strokeWidth={1.4} />
-              {property.bedrooms} Beds
+              {property.specifications.bedrooms} Beds
             </span>
           )}
 
-          {property.bathrooms !== undefined && property.bathrooms !== null && (
+          {property.specifications.bathrooms !== undefined && property.specifications.bathrooms !== null && (
             <span className="flex items-center gap-1.5">
               <Bath size={17} strokeWidth={1.4} />
-              {property.bathrooms} Baths
+              {property.specifications.bathrooms} Baths
             </span>
           )}
 
-          {property.area !== undefined && property.area !== null && (
+          {property.specifications.area !== undefined && property.specifications.area !== null && (
             <span className="flex items-center gap-1.5">
               <Maximize size={15} strokeWidth={1.4} />
-              {property.area.toLocaleString("en-IN")} sq.ft
+              {property.specifications.area.toLocaleString("en-IN")} sq.ft
             </span>
           )}
         </div>
