@@ -43,7 +43,7 @@ const ChooseUsHeader = () => {
             <h1 className="text-2xl sm:text-3xl lg:text-5xl">Property advice that starts <br className="hidden lg:inline" /> with you, not the listing.</h1>
           </div>
           <div className="flex h-auto w-full flex-col gap-5 lg:h-full lg:w-1/2 lg:px-20">  
-              <h1 className="text-sm leading-relaxed sm:text-base lg:text-lg lg:leading-tight">Real estate is a decision about how you want to live and grow. We take the time to understand it, then guide every step with local knowledge and clear communication.</h1>
+              <h1 className="text-sm sm:text-base lg:text-lg lg:leading-tight">Real estate is a decision about how you want to live and grow. We take the time to understand it, then guide every step with local knowledge and clear communication.</h1>
               <button className="w-full px-7 py-4 bg-black text-white lg:w-fit">Speak with our team</button>
           </div>
       </header>

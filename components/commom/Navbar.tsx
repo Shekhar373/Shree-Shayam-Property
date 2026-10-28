@@ -40,7 +40,7 @@ const Navbar = () => {
   });
 
   return (
-    <div ref={navRef} className='p-5 overflow-hidden fixed top-0 w-full z-50 text-white mix-blend-difference'>
+    <div ref={navRef} className='p-5 overflow-hidden fixed top-0 w-full z-50 text-white mix-blend-difference hidden lg:visible'>
       <div className=' flex items-center justify-between font-[heading-font]'>
         {/* Left - Logo and Title */}
         <div className='flex gap-2 items-center'>

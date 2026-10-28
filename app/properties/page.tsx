@@ -46,7 +46,6 @@ const PropertiesPage = () => {
           ))
         )}
       </div>
-
       <Footer />
     </div>
   );

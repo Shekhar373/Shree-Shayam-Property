@@ -41,7 +41,7 @@ const AboutRight = () => {
       ref={containerRef}
       className="flex min-w-0 w-full flex-col justify-between gap-8 sm:gap-10 lg:w-1/2 lg:gap-12"
     >
-      <h2 className="about-text text-base leading-tight sm:text-lg md:text-xl lg:text-2xl lg:leading-tight">
+      <h2 className="about-text text-lg leading-tight sm:text-lg md:text-xl lg:text-2xl lg:leading-tight">
         <span className="inline-block pl-3 sm:pl-10 md:pl-16 lg:pl-[6vw]">
           We
         </span>{" "}
@@ -58,7 +58,7 @@ const AboutRight = () => {
           </p>
         </div>
 
-        <div className="flex w-full min-w-0 flex-col gap-4 text-sm leading-snug tracking-tight sm:gap-5 lg:w-3/5 lg:leading-tight">
+        <div className="flex w-full min-w-0 flex-col gap-4 text-xs leading-snug tracking-tight sm:gap-5 lg:w-3/5 lg:leading-tight">
           <p className="about-text">
             Real estate is more than buying, selling, or renting a property. It
             is about finding the right place to build your future.

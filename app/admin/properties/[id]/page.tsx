@@ -171,7 +171,7 @@ export default function PropertyDetailsPage() {
             </Link>
 
             <Link
-              href={`/property/${property.slug}`}
+              href={`/properties/${property._id}`}
               target="_blank"
               className="rounded-xl bg-[#25382d] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#3b5543]"
             >

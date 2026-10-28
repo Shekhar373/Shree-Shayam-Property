@@ -113,7 +113,7 @@ const NewPropertyCard: React.FC<NewPropertyCardProps> = ({ img }) => {
   return (
     <div
       ref={containerRef}
-      className="h-[40vh] lg:h-screen w-full workcard-main overflow-hidden relative cursor-pointer"
+      className="h-[70vh] lg:h-screen w-full workcard-main overflow-hidden relative cursor-pointer"
       // style={{ cursor: "none" }}
     >
       {/* Cursor Follow - Only appears on large screens */}

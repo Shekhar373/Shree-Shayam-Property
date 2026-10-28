@@ -4,7 +4,12 @@ import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import React, { useRef } from "react";
 
-const ServiceCardComponent = () => {
+type ServiceCard = {
+  title: String,
+  description: String
+}
+
+const ServiceCardComponent = ({title, description}:ServiceCard) => {
   const containerRef = useRef(null)
   gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -46,10 +51,9 @@ const ServiceCardComponent = () => {
           <h1>01</h1>
         </div>
         <div className="flex min-w-0 flex-col justify-between gap-2 lg:gap-0">
-          <h1 className="text-xl lg:text-3xl">Buy a home</h1>
+          <h1 className="text-xl lg:text-3xl">{title}</h1>
           <h1 className="text-xs leading-relaxed lg:text-sm lg:leading-normal">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa
-            architecto, consequuntur autem a placeat soluta!
+            {description}
           </h1>
         </div>
         <div className="hidden lg:block"></div>
