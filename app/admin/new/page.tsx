@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import type { PropertyFormData } from "@/types/PropertyFormData";
 
@@ -30,7 +30,7 @@ const initialFormData: PropertyFormData = {
   images: [],
   status: "draft",
   featured: false,
-  publishedAt: ""
+  publishedAt: "",
 };
 
 const inputClass =
@@ -39,8 +39,9 @@ const inputClass =
 const labelClass = "mb-2 block text-sm font-medium text-gray-700";
 
 export default function AddPropertyPage() {
-  const [formData, setFormData] =
-    useState<PropertyFormData>(initialFormData);
+  const [formData, setFormData] = useState<PropertyFormData>(initialFormData);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -49,14 +50,12 @@ export default function AddPropertyPage() {
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = event.target;
 
     const newValue =
-      type === "checkbox"
-        ? (event.target as HTMLInputElement).checked
-        : value;
+      type === "checkbox" ? (event.target as HTMLInputElement).checked : value;
 
     setFormData((prev) => {
       if (name.startsWith("address.")) {
@@ -72,7 +71,9 @@ export default function AddPropertyPage() {
       }
 
       if (name.startsWith("specifications.")) {
-        const field = name.split(".")[1] as keyof PropertyFormData["specifications"];
+        const field = name.split(
+          ".",
+        )[1] as keyof PropertyFormData["specifications"];
 
         return {
           ...prev,
@@ -126,9 +127,7 @@ export default function AddPropertyPage() {
     });
   };
 
-  const handleTitleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const title = event.target.value;
 
     setFormData((prev) => ({
@@ -143,9 +142,85 @@ export default function AddPropertyPage() {
     }));
   };
 
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const files = Array.from(event.target.files ?? []);
+
+    // Allow selecting the same file again later.
+    event.target.value = "";
+
+    if (files.length === 0) return;
+
+    setUploading(true);
+    setError("");
+    setMessage("");
+
+    try {
+      for (const file of files) {
+        const data = new FormData();
+        data.append("image", file);
+
+        const response = await fetch("/api/admin/upload", {
+          method: "POST",
+          body: data,
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || `Failed to upload ${file.name}`);
+        }
+
+        setFormData((prev) => ({
+          ...prev,
+          images: [...prev.images, result.image],
+        }));
+      }
+
+      setMessage("Images uploaded successfully.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Image upload failed.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemoveImage = async (publicId: string) => {
+    setError("");
+    setMessage("");
+  
+    try {
+      const response = await fetch("/api/admin/upload/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ publicId }),
+      });
+  
+      const result = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to delete image");
+      }
+  
+      setFormData((prev) => ({
+        ...prev,
+        images: prev.images.filter(
+          (image) => image.publicId !== publicId
+        ),
+      }));
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Image deletion failed"
+      );
+    }
+  };
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
-    status: "draft" | "published"
+    status: "draft" | "published",
   ) => {
     event.preventDefault();
 
@@ -184,7 +259,7 @@ export default function AddPropertyPage() {
       setMessage(
         status === "published"
           ? "Property published successfully."
-          : "Property saved as draft."
+          : "Property saved as draft.",
       );
 
       setFormData(initialFormData);
@@ -192,7 +267,7 @@ export default function AddPropertyPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Something went wrong. Please try again."
+          : "Something went wrong. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -246,6 +321,7 @@ export default function AddPropertyPage() {
 
         <form
           onSubmit={(event) => handleSubmit(event, "draft")}
+          
           className="space-y-6"
         >
           {/* Basic information */}
@@ -254,9 +330,7 @@ export default function AddPropertyPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
                 01 / Overview
               </p>
-              <h2 className="mt-2 text-xl font-semibold">
-                Basic information
-              </h2>
+              <h2 className="mt-2 text-xl font-semibold">Basic information</h2>
               <p className="mt-1 text-sm text-gray-500">
                 Give your property a title and describe what makes it special.
               </p>
@@ -363,9 +437,7 @@ export default function AddPropertyPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
                 02 / Pricing
               </p>
-              <h2 className="mt-2 text-xl font-semibold">
-                Price details
-              </h2>
+              <h2 className="mt-2 text-xl font-semibold">Price details</h2>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -413,9 +485,7 @@ export default function AddPropertyPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
                 03 / Location
               </p>
-              <h2 className="mt-2 text-xl font-semibold">
-                Property address
-              </h2>
+              <h2 className="mt-2 text-xl font-semibold">Property address</h2>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -500,9 +570,7 @@ export default function AddPropertyPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
                 04 / Details
               </p>
-              <h2 className="mt-2 text-xl font-semibold">
-                Specifications
-              </h2>
+              <h2 className="mt-2 text-xl font-semibold">Specifications</h2>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -611,26 +679,80 @@ export default function AddPropertyPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
                 05 / Media
               </p>
-              <h2 className="mt-2 text-xl font-semibold">
-                Property images
-              </h2>
+
+              <h2 className="mt-2 text-xl font-semibold">Property images</h2>
+
               <p className="mt-1 text-sm text-gray-500">
-                Image uploading will be connected to cloud storage separately.
+                Upload property photos. JPEG, PNG, or WebP, maximum 5 MB each.
               </p>
             </div>
 
-            <div className="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 px-5 py-10 text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-xl text-emerald-800">
-                ↑
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              onChange={handleImageUpload}
+              className="hidden"
+              disabled={uploading || loading}
+            />
+
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading || loading}
+              className="w-full rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 px-5 py-10 text-center transition hover:border-emerald-600 hover:bg-emerald-50/50 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-xl text-emerald-800">
+                {uploading ? "…" : "↑"}
+              </span>
+
+              <span className="block font-medium text-gray-900">
+                {uploading ? "Uploading images..." : "Click to upload images"}
+              </span>
+
+              <span className="mt-2 block text-sm text-gray-500">
+                {uploading
+                  ? "Please wait while your images are uploaded."
+                  : "Select one or multiple images"}
+              </span>
+            </button>
+
+            {formData.images.length > 0 && (
+              <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {formData.images.map((image) => (
+                  <div
+                    key={image.publicId}
+                    className="group relative overflow-hidden rounded-xl border border-gray-200"
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.alt || "Property image"}
+                      className="h-40 w-full object-cover"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(image.publicId)}
+                      disabled={uploading || loading}
+                      aria-label={`Remove ${image.alt || "property image"}`}
+                      className="absolute right-2 top-2 rounded-lg bg-black/70 px-3 py-2 text-xs font-medium text-white transition hover:bg-red-600 disabled:opacity-50"
+                    >
+                      Remove
+                    </button>
+
+                    <p className="truncate px-3 py-2 text-xs text-gray-500">
+                      {image.alt}
+                    </p>
+                  </div>
+                ))}
               </div>
+            )}
 
-              <p className="font-medium">Image upload not connected yet</p>
-
-              <p className="mt-2 text-sm text-gray-500">
-                Next, connect Cloudinary or another image storage service to
-                save image URLs and public IDs.
-              </p>
-            </div>
+            <p className="mt-4 text-sm text-gray-500">
+              {formData.images.length} image
+              {formData.images.length === 1 ? "" : "s"} uploaded
+            </p>
           </section>
 
           {/* Listing settings */}
@@ -639,9 +761,7 @@ export default function AddPropertyPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
                 06 / Publishing
               </p>
-              <h2 className="mt-2 text-xl font-semibold">
-                Listing settings
-              </h2>
+              <h2 className="mt-2 text-xl font-semibold">Listing settings</h2>
             </div>
 
             <div className="space-y-5">
@@ -697,7 +817,7 @@ export default function AddPropertyPage() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || uploading}
                 onClick={() => {
                   // The form's default submit saves as draft.
                 }}
@@ -708,8 +828,8 @@ export default function AddPropertyPage() {
 
               <button
                 type="button"
-                disabled={loading}
-                onClick={(event) => {
+                disabled={loading || uploading} 
+                  onClick={(event) => {
                   const form = event.currentTarget.form;
                   if (!form) return;
 
@@ -718,7 +838,7 @@ export default function AddPropertyPage() {
                       {
                         preventDefault: () => {},
                       } as React.FormEvent<HTMLFormElement>,
-                      "published"
+                      "published",
                     );
                   }
                 }}

@@ -1,16 +1,29 @@
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { isAdminAuthenticated } from "@/lib/auth";
 
-export default async function AdminLayout({
+async function ProtectedAdmin({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const authenticated = await isAdminAuthenticated();
+  const isAuthenticated = await isAdminAuthenticated();
 
-  if (!authenticated) {
+  if (!isAuthenticated) {
     redirect("/admin-login");
   }
 
   return <>{children}</>;
+}
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense fallback={<div>Loading admin...</div>}>
+      <ProtectedAdmin>{children}</ProtectedAdmin>
+    </Suspense>
+  );
 }

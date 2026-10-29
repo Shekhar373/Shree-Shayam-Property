@@ -68,7 +68,7 @@ const navigation = [
         </div>
 
          {/* logout button */}
-        <div>
+        <div className="mt-6">
         <LogoutButton />
         </div>
   

@@ -11,14 +11,21 @@ export default function PropertyCard(props:PropertyTypeData) {
   }).format(property.price ?? 0);
 
   // Support backward compatibility: Try to get the first image if available
-  const getImageUrl = () => {
-    if (property.images && property.images.length > 0) {
-      return property.images[0];
-    } else if (
-      (property as any).image // some feeds store as 'image'
-    ) {
+  const getImageUrl = (): string | null => {
+    const firstImage = property.images?.[0];
+  
+    if (typeof firstImage === "string") {
+      return firstImage;
+    }
+  
+    if (firstImage && typeof firstImage === "object") {
+      return firstImage.url || null;
+    }
+  
+    if (typeof (property as any).image === "string") {
       return (property as any).image;
     }
+  
     return null;
   };
 
@@ -41,7 +48,7 @@ export default function PropertyCard(props:PropertyTypeData) {
                 height: "100%",
                 transition: "transform 0.7s ease-out",
               }}
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] w-full h-full"
+              className="object-cover transition-all group-hover:scale-[1.04] w-full h-full"
             />
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-neutral-500">
