@@ -132,7 +132,7 @@ const NewPropertyCard: React.FC<NewPropertyCardProps> = ({ img }) => {
           z-20
           -translate-x-1/2 
           -translate-y-1/2
-          flex justify-center items-center
+          justify-center items-center
           text-xs text-white mix-blend-difference
           hidden lg:flex
         `}
@@ -149,6 +149,10 @@ const NewPropertyCard: React.FC<NewPropertyCardProps> = ({ img }) => {
           loading="lazy"
           draggable={false}
         />
+        <div className="absolute top-0 h-full w-full flex flex-col justify-end p-5 text-white">
+           <h1 className="text-xs">Dwarka sector 12</h1>
+           <h1 className="text-3xl">Flat in Dwarka</h1>
+        </div>
       </div>
     </div>
   );

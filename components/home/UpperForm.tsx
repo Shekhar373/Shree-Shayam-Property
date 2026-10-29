@@ -10,9 +10,21 @@ const UpperForm = () => {
           alt=""
         />
       </div>
-      {/* <div className="absolute top-0 h-screen w-full">
-        <h1></h1>
-      </div> */}
+      <div className="absolute top-0 h-screen w-full flex justify-between items-center text-white mix-blend-difference text-5xl font-[heading-font] p-5">
+        <h1>Your</h1>
+        <h1>Next</h1>
+        <h1>Address</h1>
+      </div>
+      <div className="absolute bottom-5 right-5  ">
+        <div className="w-[25vw] text-sm text-white">
+          <h1>
+            From private villas to waterfront residences, we guide you to a home
+            that suits your lifestyle and your long-term goals. Honest advice,
+            discreet service, and properties worth owning.
+          </h1>
+          <button className="underline">Explore now</button>
+        </div>{" "}
+      </div>
     </div>
   );
 };
