@@ -1,3 +1,4 @@
+import { isAdminAuthenticated } from "@/lib/auth";
 import dbConnect from "@/lib/connectdb";
 import Inquiry from "@/models/Inquiry";
 import Property from "@/models/Property";
@@ -51,6 +52,14 @@ export async function POST(request: Request) {
 
 // Created a get request for reading inquiries
 export async function GET() {
+
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   try {
     await dbConnect();
 

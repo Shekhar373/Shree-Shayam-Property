@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/connectdb";
 import Inquiry from "@/models/Inquiry";
+import { isAdminAuthenticated } from "@/lib/auth";
 
 const allowedStatuses = [
   "new",
@@ -13,6 +14,13 @@ const allowedStatuses = [
 ];
 
 export async function GET(_request, { params }) {
+
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
   try {
     const { id } = await params;
 
@@ -48,6 +56,14 @@ export async function GET(_request, { params }) {
 }
 
 export async function PATCH(request, { params }) {
+
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+  
   try {
     const { id } = await params;
     const body = await request.json();

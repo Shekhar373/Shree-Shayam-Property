@@ -1,3 +1,4 @@
+import { isAdminAuthenticated } from "@/lib/auth";
 import dbConnect from "@/lib/connectdb";
 import Property from "@/models/Property";
 import { NextRequest, NextResponse } from "next/server";
@@ -33,6 +34,14 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   try {
     await dbConnect();
 

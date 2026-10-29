@@ -1,3 +1,5 @@
+import LogoutButton from "./LogoutButton";
+
 const navigation = [
     { name: "Dashboard", href: "/admin", icon: "▦" },
     { name: "Properties", href: "/admin/properties", icon: "⌂" },
@@ -63,6 +65,11 @@ const navigation = [
           <p className="mt-2 text-xs leading-5 text-white/50">
             Keep your property listings organized and up to date.
           </p>
+        </div>
+
+         {/* logout button */}
+        <div>
+        <LogoutButton />
         </div>
   
         {/* Admin profile */}
