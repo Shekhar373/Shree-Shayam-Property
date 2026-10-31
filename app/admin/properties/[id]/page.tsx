@@ -1,10 +1,10 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 
 type Property = {
   _id: string;
@@ -68,27 +68,59 @@ export default function PropertyDetailsPage() {
   const [error, setError] = useState("");
   const [activeImage, setActiveImage] = useState(0);
 
+  // const router = useRouter();
+
   useEffect(() => {
     if (!id) return;
 
     const getProperty = async () => {
-        try {
-            console.log("Property ID from URL:", id);
-        
-            const { data } = await axios.get(`/api/properties/${id}`);
-        
-            console.log("Fetched property:", data.property);
-            setProperty(data.property);
-          } catch (err) {
-            console.error("Failed to fetch property:", err);
-            setError("Failed to load property details.");
-          } finally {
+      try {
+        console.log("Property ID from URL:", id);
+
+        const { data } = await axios.get(`/api/properties/${id}`);
+
+        console.log("Fetched property:", data.property);
+        setProperty(data.property);
+      } catch (err) {
+        console.error("Failed to fetch property:", err);
+        setError("Failed to load property details.");
+      } finally {
         setLoading(false);
       }
     };
 
     getProperty();
   }, [id]);
+
+  async function handleDeleteProperty(id: string) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this property? This action cannot be undone.",
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`/api/properties/${id}`, {
+        method: "DELETE",
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to delete property");
+      }
+
+      // Remove the deleted property from your displayed list.
+      setProperty((prev) => prev.filter((property) => property._id !== id));
+
+      alert(result.message);
+
+      // router.push("/admin/properties");
+      // router.refresh();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Something went wrong");
+    }
+  }
 
   const formatPrice = (property: Property) => {
     const price = Number(property.price);
@@ -97,9 +129,7 @@ export default function PropertyDetailsPage() {
 
     return `₹${new Intl.NumberFormat("en-IN", {
       maximumFractionDigits: 0,
-    }).format(price)}${
-      property.priceUnit === "monthly" ? " / month" : ""
-    }`;
+    }).format(price)}${property.priceUnit === "monthly" ? " / month" : ""}`;
   };
 
   if (loading) {
@@ -113,9 +143,7 @@ export default function PropertyDetailsPage() {
   if (error || !property) {
     return (
       <main className="min-h-screen bg-[#f5f6f2] p-8">
-        <p className="text-red-600">
-          {error || "Property not found."}
-        </p>
+        <p className="text-red-600">{error || "Property not found."}</p>
 
         <Link
           href="/admin/properties"
@@ -149,8 +177,7 @@ export default function PropertyDetailsPage() {
 
               <span
                 className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize ${
-                  statusStyles[property.status] ||
-                  "bg-gray-100 text-gray-600"
+                  statusStyles[property.status] || "bg-gray-100 text-gray-600"
                 }`}
               >
                 {property.status}
@@ -163,6 +190,14 @@ export default function PropertyDetailsPage() {
           </div>
 
           <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => handleDeleteProperty(property._id)}
+              className="rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 transition hover:bg-red-50"
+            >
+              Delete
+            </button>
+
             <Link
               href={`/admin/properties/${property._id}/edit`}
               className="rounded-xl border border-[#dce2d7] bg-white px-5 py-3 text-sm font-medium transition hover:bg-[#edf0e9]"
@@ -189,17 +224,13 @@ export default function PropertyDetailsPage() {
                 {images.length > 0 ? (
                   <img
                     src={images[activeImage]?.url}
-                    alt={
-                      images[activeImage]?.alt || property.title
-                    }
+                    alt={images[activeImage]?.alt || property.title}
                     className="h-full w-full object-cover"
                   />
                 ) : (
                   <div className="text-center text-[#899287]">
                     <p className="text-4xl">⌂</p>
-                    <p className="mt-2 text-sm">
-                      No property images uploaded
-                    </p>
+                    <p className="mt-2 text-sm">No property images uploaded</p>
                   </div>
                 )}
 
@@ -210,8 +241,7 @@ export default function PropertyDetailsPage() {
                       aria-label="Previous image"
                       onClick={() =>
                         setActiveImage(
-                          (activeImage - 1 + images.length) %
-                            images.length
+                          (activeImage - 1 + images.length) % images.length,
                         )
                       }
                       className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xl shadow transition hover:bg-white"
@@ -223,9 +253,7 @@ export default function PropertyDetailsPage() {
                       type="button"
                       aria-label="Next image"
                       onClick={() =>
-                        setActiveImage(
-                          (activeImage + 1) % images.length
-                        )
+                        setActiveImage((activeImage + 1) % images.length)
                       }
                       className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xl shadow transition hover:bg-white"
                     >
@@ -349,21 +377,15 @@ export default function PropertyDetailsPage() {
                   {
                     label: "Furnishing",
                     value:
-                      property.specifications?.furnishing ||
-                      "Not specified",
+                      property.specifications?.furnishing || "Not specified",
                   },
                   {
                     label: "Property type",
                     value: property.propertyType,
                   },
                 ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-xl bg-[#f7f8f5] p-4"
-                  >
-                    <p className="text-xs text-[#899287]">
-                      {item.label}
-                    </p>
+                  <div key={item.label} className="rounded-xl bg-[#f7f8f5] p-4">
+                    <p className="text-xs text-[#899287]">{item.label}</p>
                     <p className="mt-2 break-words text-sm font-semibold capitalize">
                       {item.value}
                     </p>
@@ -374,9 +396,7 @@ export default function PropertyDetailsPage() {
 
             {/* Address */}
             <section className="rounded-2xl border border-[#e4e8df] bg-white p-6 sm:p-8">
-              <h2 className="mb-5 text-lg font-semibold">
-                Location details
-              </h2>
+              <h2 className="mb-5 text-lg font-semibold">Location details</h2>
 
               <div className="space-y-4 text-sm">
                 {property.address?.street && (
@@ -388,25 +408,20 @@ export default function PropertyDetailsPage() {
 
                 <div>
                   <p className="text-xs text-[#899287]">Locality</p>
-                  <p className="mt-1">
-                    {property.address?.locality}
-                  </p>
+                  <p className="mt-1">{property.address?.locality}</p>
                 </div>
 
                 <div>
                   <p className="text-xs text-[#899287]">City and state</p>
                   <p className="mt-1">
-                    {property.address?.city},{" "}
-                    {property.address?.state}
+                    {property.address?.city}, {property.address?.state}
                   </p>
                 </div>
 
                 {property.address?.pincode && (
                   <div>
                     <p className="text-xs text-[#899287]">Pincode</p>
-                    <p className="mt-1">
-                      {property.address.pincode}
-                    </p>
+                    <p className="mt-1">{property.address.pincode}</p>
                   </div>
                 )}
               </div>
@@ -422,45 +437,35 @@ export default function PropertyDetailsPage() {
 
               <div className="space-y-5">
                 <div>
-                  <p className="text-xs text-[#899287]">
-                    Listing status
-                  </p>
+                  <p className="text-xs text-[#899287]">Listing status</p>
                   <p className="mt-1 font-medium capitalize">
                     {property.status}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#899287]">
-                    Listing type
-                  </p>
+                  <p className="text-xs text-[#899287]">Listing type</p>
                   <p className="mt-1 font-medium capitalize">
                     For {property.listingType}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#899287]">
-                    Featured
-                  </p>
+                  <p className="text-xs text-[#899287]">Featured</p>
                   <p className="mt-1 font-medium">
                     {property.featured ? "Yes" : "No"}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#899287]">
-                    Date added
-                  </p>
+                  <p className="text-xs text-[#899287]">Date added</p>
                   <p className="mt-1 font-medium">
                     {formatDate(property.createdAt)}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#899287]">
-                    Last updated
-                  </p>
+                  <p className="text-xs text-[#899287]">Last updated</p>
                   <p className="mt-1 font-medium">
                     {formatDate(property.updatedAt)}
                   </p>
@@ -468,9 +473,7 @@ export default function PropertyDetailsPage() {
 
                 {property.publishedAt && (
                   <div>
-                    <p className="text-xs text-[#899287]">
-                      Published on
-                    </p>
+                    <p className="text-xs text-[#899287]">Published on</p>
                     <p className="mt-1 font-medium">
                       {formatDate(property.publishedAt)}
                     </p>
@@ -480,9 +483,7 @@ export default function PropertyDetailsPage() {
             </section>
 
             <section className="rounded-2xl border border-[#e4e8df] bg-white p-6">
-              <h2 className="mb-4 text-lg font-semibold">
-                Property reference
-              </h2>
+              <h2 className="mb-4 text-lg font-semibold">Property reference</h2>
 
               <p className="text-xs text-[#899287]">Database ID</p>
               <p className="mt-2 break-all font-mono text-xs leading-6">
