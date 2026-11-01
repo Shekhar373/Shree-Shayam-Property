@@ -3,6 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -40,32 +41,39 @@ const Navbar = () => {
   });
 
   return (
-    <div ref={navRef} className='p-5 overflow-hidden fixed top-0 w-full z-50 text-white mix-blend-difference hidden lg:visible'>
-      <div className=' flex items-center justify-between font-[heading-font]'>
-        {/* Left - Logo and Title */}
-        <div className='flex gap-2 items-center'>
-          <img
-            className='h-8 w-8 object-cover rounded-full'
-            src="https://i.pinimg.com/1200x/d5/1c/a8/d51ca8e3f2e37e22ab7d5842e6480720.jpg"
-            alt="ShreeShayam Logo"
-          />
-          <span className='text-md font-medium tracking-wide'>ShreeShayam</span>
-        </div>
-        {/* Center - Menu */}
-        <div className='flex gap-8 items-center text-sm font-medium'>
-          <span>Properties</span>
-          <span>Our Services</span>
-          <span>About</span>
-          <span>Houses</span>
-        </div>
-        {/* Right - Contact Button */}
-        <div>
-          <span className='text-sm  font-semibold'>
-            Contact Us
-          </span>
-        </div>
+    <div
+    ref={navRef}
+    className="fixed top-0 z-40 w-full px-5 text-white mix-blend-difference"
+  >
+    <div className="grid grid-cols-3 items-center font-[heading-font]">
+  
+      {/* Left - Navigation Links */}
+      <div className="flex items-center justify-start gap-8 text-xs font-medium">
+        <Link href="/properties" className="cursor-pointer">
+          Properties
+        </Link>
+  
+        <span className="cursor-pointer whitespace-nowrap">
+          Our Services
+        </span>
       </div>
+  
+      {/* Center - Logo */}
+      <div className="flex items-center justify-center">
+        <span className="whitespace-nowrap text-xl font-medium tracking-wide">
+          ShreeShayam
+        </span>
+      </div>
+  
+      {/* Right - Contact */}
+      <div className="flex justify-end">
+        <span className="cursor-pointer whitespace-nowrap text-xs font-medium">
+          Contact Us
+        </span>
+      </div>
+  
     </div>
+  </div>
   )
 }
 

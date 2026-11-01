@@ -1,11 +1,11 @@
 import Hero from '@/components/home/Hero'
 import Services from '@/components/home/Services'
-import { HomeProperties } from '@/components/home/HomeProperties'
 import InquiryPage from '@/components/home/InquiryPage'
 import Footer from '@/components/commom/Footer'
 import About from '@/components/home/About'
 import UpperForm from '@/components/home/UpperForm'
 import WhyChooseUs from '@/components/home/WhyChooseUs'
+import { FeaturedProperty } from '@/components/home/FeaturedProperties'
 
 const page = () => {
   
@@ -14,7 +14,7 @@ const page = () => {
       
       <Hero />
       <About />
-      <HomeProperties />
+      <FeaturedProperty />
       <Services />
       <UpperForm />
       <WhyChooseUs />

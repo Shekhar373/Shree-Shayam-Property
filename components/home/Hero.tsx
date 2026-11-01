@@ -1,4 +1,5 @@
 import React from "react";
+import HeroText from "./HeroText";
 
 const Hero = () => {
   return (
@@ -10,9 +11,11 @@ const Hero = () => {
         autoPlay
         muted
         loop
-        className="absolute top-0 left-0 z-0 h-full w-full object-cover"
+        className="absolute top-0 left-0 -z-10 h-full w-full object-cover"
         src="https://assets.lenvalproperties.com/projects/project-j_src.mp4"
       />
+
+      <HeroText/>
     </section>
   );
 };
