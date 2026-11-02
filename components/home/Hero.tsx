@@ -1,5 +1,6 @@
 import React from "react";
 import HeroText from "./HeroText";
+import NewHeroText from "./NewHeroText";
 
 const Hero = () => {
   return (
@@ -15,7 +16,8 @@ const Hero = () => {
         src="https://assets.lenvalproperties.com/projects/project-j_src.mp4"
       />
 
-      <HeroText/>
+      {/* <HeroText/> */}
+      <NewHeroText />
     </section>
   );
 };

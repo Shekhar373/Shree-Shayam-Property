@@ -155,7 +155,7 @@ export default function Footer() {
           <p>
             ©
              {/* {new Date().getFullYear()} */}
-             HomeKey Realty. All rights reserved.
+             ShreeShayam Property. All rights reserved.
           </p>
 
           <div className="flex flex-wrap gap-x-6 gap-y-3">

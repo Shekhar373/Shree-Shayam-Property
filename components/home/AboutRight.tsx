@@ -2,6 +2,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
+import Link from "next/link";
 import { useRef } from "react";
 
 const AboutRight = () => {
@@ -70,9 +71,10 @@ const AboutRight = () => {
             a valuable investment, or the ideal commercial space, we make the
             process seamless, transparent, and rewarding.
           </p>
-          <button className="px-5 py-3 bg-black text-white w-fit">
+         <Link href={"/properties"}>
+         <button className="px-5 py-3 bg-black text-white w-fit cursor-pointer">
             See our work
-          </button>
+          </button></Link>
         </div>
       </div>
     </div>
