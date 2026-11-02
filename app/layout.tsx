@@ -5,6 +5,7 @@ import SmotheScroller from "@/components/commom/SmotheScroller";
 import Navbar from "@/components/commom/Navbar";
 import SmokeCursor from "../components/commom/SmokeCursor"
 import ScrollToTop from "@/components/commom/ScrollToTop";
+import FullScreenNav from "@/components/commom/FullScreenNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       /> */}
         
           {/* <Navbar /> */}
+          <FullScreenNav />
         <SmotheScroller>
           <ScrollToTop />
         {children}

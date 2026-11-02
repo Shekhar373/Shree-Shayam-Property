@@ -13,6 +13,17 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.fullscreen-menu {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.fullscreen-menu::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 body{
   font-family:"body-font";
 }

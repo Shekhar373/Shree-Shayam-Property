@@ -1,6 +1,7 @@
 "use client"
 import Footer from "@/components/commom/Footer";
 import PropertyCard from "@/components/Property/PropertyCard";
+import PropertyFooter from "@/components/Property/PropertyFooter";
 import PropertyHero from "@/components/Property/PropertyHero";
 import { PropertyTypeData } from "@/types/PropertyType";
 import axios from "axios";
@@ -46,6 +47,7 @@ const PropertiesPage = () => {
           ))
         )}
       </div>
+      <PropertyFooter />
       <Footer />
     </div>
   );

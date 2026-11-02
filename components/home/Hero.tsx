@@ -16,8 +16,8 @@ const Hero = () => {
         src="https://assets.lenvalproperties.com/projects/project-j_src.mp4"
       />
 
-      {/* <HeroText/> */}
-      <NewHeroText />
+      <HeroText/>
+      {/* <NewHeroText /> */}
     </section>
   );
 };
