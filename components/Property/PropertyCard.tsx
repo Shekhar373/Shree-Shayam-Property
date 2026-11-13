@@ -44,7 +44,7 @@ const formattedPrice = new Intl.NumberFormat("en-IN", {
         >
           {getImageUrl() ? (
             <img
-            src={getImageUrl() || "/images/placeholder.jpg"}
+            src={getImageUrl() || "/next.svg"}
               alt={property.title}
               style={{
                 objectFit: "cover",
