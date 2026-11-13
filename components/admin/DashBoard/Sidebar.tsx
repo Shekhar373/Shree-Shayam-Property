@@ -8,7 +8,7 @@ const navigation = [
   
   export default function Sidebar() {
     return (
-      <aside className="flex w-full shrink-0 flex-col bg-[#1d3026] px-5 py-6 text-white md:min-h-screen md:w-[260px]">
+      <aside className="flex w-full shrink-0 flex-col bg-[#1d3026] px-5 py-6 text-white md:min-h-screen md:w-[260px] pt-20">
         {/* Brand */}
         <div className="mb-10 flex items-center gap-3 px-2">
           <div className="grid size-11 place-items-center rounded-xl bg-[#d6e5c9] text-2xl text-[#1d3026]">

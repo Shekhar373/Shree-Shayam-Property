@@ -278,7 +278,7 @@ export default function EditPropertyForm({
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f6f2] px-5 py-8 text-[#25382d] md:px-10 md:py-12">
+    <main className="min-h-screen bg-[#f5f6f2] px-5 py-8 text-[#25382d] md:px-10 md:pt-[10vh]">
       <div className="mx-auto max-w-5xl">
         <button
           type="button"

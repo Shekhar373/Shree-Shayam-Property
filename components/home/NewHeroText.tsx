@@ -3,10 +3,10 @@ import React from "react";
 
 const NewHeroText = () => {
   return (
-<section className="relative flex min-h-screen w-full flex-col overflow-hidden px-5 py-7 text-[#fffaf0] sm:px-8 sm:py-9 md:px-12 md:py-12 lg:px-16">
+<section className="relative flex min-h-screen w-full flex-col overflow-hidden px-5 py-7 text-[#fffaf0] sm:px-8 sm:py-9 md:px-12 md:py-12 lg:px-16 lg:mt-[15vh]">
 
   {/* Top Categories */}
-  <div className="relative z-10 flex flex-wrap items-center gap-x-2 gap-y-2 text-[9px] font-medium uppercase tracking-[0.16em] sm:gap-x-3 sm:text-[10px] sm:tracking-[0.2em] md:gap-x-4 md:text-xs md:tracking-[0.25em]">
+  <div className="relative z-10 flex flex-wrap items-center gap-x-2 gap-y-2 text-[9px] font-medium uppercase tracking-[0.16em] sm:gap-x-3 sm:text-[10px] sm:tracking-[0.2em] md:gap-x-4 md:text-xs md:tracking-[0.25em] max-md:mt-[10vh]">
     <span>Residential</span>
     <span className="text-[#f0d29d]">•</span>
     <span>Commercial</span>
@@ -27,7 +27,7 @@ const NewHeroText = () => {
   {/* Main Heading and Button */}
   <div className="relative z-10 mt-auto pb-16 pt-16 sm:pb-20 md:pb-[8vh] lg:pb-[9vh]">
 
-    <h1 className="font-serif text-[9vw] lg:text-[6vw] uppercase leading-[0.8] tracking-[-0.055em]">
+    <h1 className=" text-[9vw] lg:text-[6vw] uppercase leading-[0.8] tracking-[-0.055em]">
 
       <span className="block">Find a</span>
 

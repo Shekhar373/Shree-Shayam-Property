@@ -1,6 +1,5 @@
 import React from "react";
 import NewPropertyCard from "./NewPropertyCard";
-import axios from "axios";
 
 // type Property = {
 //   _id: string;

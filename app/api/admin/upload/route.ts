@@ -60,6 +60,7 @@ export async function POST(request: Request) {
           {
             folder: "properties",
             resource_type: "image",
+            timeout: 120000,
           },
           (error, result) => {
             if (error || !result) {
@@ -76,6 +77,8 @@ export async function POST(request: Request) {
         .end(buffer);
     });
 
+    
+
     // 6. Return image details
     return NextResponse.json({
       success: true,
@@ -86,8 +89,12 @@ export async function POST(request: Request) {
       },
     });
   } catch (error) {
-    console.error("Upload error:", error);
-
+    console.error("Upload error details:", {
+      message: error instanceof Error ? error.message : error,
+      name: error instanceof Error ? error.name : "Unknown",
+      stack: error instanceof Error ? error.stack : undefined,
+    });
+  
     return NextResponse.json(
       { success: false, message: "Image upload failed." },
       { status: 500 }

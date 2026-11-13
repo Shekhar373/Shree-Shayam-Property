@@ -1,10 +1,10 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(useGSAP);
 
@@ -12,8 +12,9 @@ const navLinks = [
   { number: "01", title: "Home", href: "/" },
   { number: "02", title: "Properties", href: "/properties" },
   { number: "03", title: "Services", href: "/services" },
-  { number: "04", title: "Why Us", href: "/about" },
-  { number: "05", title: "Contact", href: "/contact" },
+  { number: "04", title: "Contact", href: "/contact" },
+  { number: "05", title: "Admin", href: "/admin" },
+
 ];
 
 export default function FullScreenNav() {
@@ -25,6 +26,9 @@ export default function FullScreenNav() {
   const linksRef = useRef<HTMLAnchorElement[]>([]);
   const featuredRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+
+  gsap.registerPlugin( ScrollTrigger );
 
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
@@ -56,7 +60,7 @@ export default function FullScreenNav() {
         headerRef.current,
         { y: -20, autoAlpha: 0 },
         { y: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out" },
-        "-=0.4"
+        "-=0.4",
       );
 
       tl.fromTo(
@@ -69,7 +73,7 @@ export default function FullScreenNav() {
           stagger: 0.08,
           ease: "power3.out",
         },
-        "-=0.5"
+        "-=0.5",
       );
 
       if (featuredRef.current) {
@@ -77,7 +81,7 @@ export default function FullScreenNav() {
           featuredRef.current,
           { scale: 0.94, autoAlpha: 0 },
           { scale: 1, autoAlpha: 1, duration: 0.7, ease: "power3.out" },
-          "-=0.5"
+          "-=0.5",
         );
       }
 
@@ -85,7 +89,7 @@ export default function FullScreenNav() {
         footerRef.current,
         { y: -20, autoAlpha: 0 },
         { y: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out" },
-        "-=0.8"
+        "-=0.8",
       );
 
       timelineRef.current = tl;
@@ -94,8 +98,38 @@ export default function FullScreenNav() {
         timelineRef.current = null;
       };
     },
-    { scope: menuRef }
+    { scope: menuRef },
   );
+
+  //  Navbar hide animation
+  useGSAP(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    const showAnim = gsap.from(nav, {
+      yPercent: -100,
+      paused: true,
+      duration: 0.45,
+      ease: "power3.out",
+    }).progress(1);
+
+    ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: (self) => {
+        if (self.scroll() < 20) {
+          showAnim.play();
+          return;
+        }
+
+        if (self.direction === -1) {
+          showAnim.play();
+        } else {
+          showAnim.reverse();
+        }
+      },
+    });
+  });
 
   // Open / Close Menu
   useEffect(() => {
@@ -139,10 +173,7 @@ export default function FullScreenNav() {
   }, [isOpen]);
 
   // Store Navigation Refs
-  const setLinkRef = (
-    element: HTMLAnchorElement | null,
-    index: number
-  ) => {
+  const setLinkRef = (element: HTMLAnchorElement | null, index: number) => {
     if (element) {
       linksRef.current[index] = element;
     }
@@ -151,11 +182,11 @@ export default function FullScreenNav() {
   return (
     <>
       {/* Navbar Trigger */}
-      <nav className="fixed left-0 top-0 z-40 flex w-full items-center justify-between px-6 py-6 text-white mix-blend-difference md:px-12">
-        <Link
-          href="/"
-          className="text-xl tracking-wider font-medium"
-        >
+      <nav
+        ref={navRef}
+        className="fixed left-0 top-0 z-40 flex w-full items-center justify-between px-6 py-6 text-white mix-blend-difference md:px-12"
+      >
+        <Link href="/" className="text-xl tracking-wider font-medium">
           ShreeShyam
         </Link>
 
@@ -166,7 +197,6 @@ export default function FullScreenNav() {
           className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] cursor-pointer"
         >
           Menu
-
           <span className="flex flex-col gap-[5px]">
             <span className="h-px w-7 bg-current" />
             <span className="h-px w-7 bg-current" />
@@ -181,7 +211,6 @@ export default function FullScreenNav() {
         className="fullscreen-menu invisible pointer-events-none fixed inset-0 z-[100] flex h-screen w-screen flex-col overflow-y-auto overscroll-contain bg-[#0d110f] px-6 py-7 text-[#f4f4f0] md:px-12"
         style={{ clipPath: "inset(0 0 100% 0)" }}
       >
-        
         {/* Header */}
         <div
           ref={headerRef}
@@ -211,7 +240,6 @@ export default function FullScreenNav() {
 
         {/* Main Content */}
         <div className="my-auto grid grid-cols-1 gap-10 py-12 md:grid-cols-[1.8fr_0.8fr] md:items-center md:gap-14 md:py-16">
-
           {/* Navigation Links */}
           <div className="w-full border-t border-white/15">
             {navLinks.map((link, index) => (
@@ -227,7 +255,7 @@ export default function FullScreenNav() {
                   {link.number}
                 </span>
 
-                <span className="text-[clamp(2rem,5.5vw,4.5rem)] overflow-clip font-medium uppercase leading-none tracking-[-0.045em] transition-transform duration-500 group-hover:translate-x-3">
+                <span className="text-6xl overflow-clip font-medium leading-none tracking-[-0.045em] transition-transform duration-500 group-hover:translate-x-3 font-[heading-font]">
                   {link.title}
                 </span>
 
@@ -271,7 +299,10 @@ export default function FullScreenNav() {
             </p>
 
             <div className="flex flex-col gap-3 text-sm">
-              <a href="mailto:hello@example.com" className="hover:text-[#d9b879]">
+              <a
+                href="mailto:hello@example.com"
+                className="hover:text-[#d9b879]"
+              >
                 hello@example.com
               </a>
               <a href="tel:+911234567890" className="hover:text-[#d9b879]">
@@ -296,8 +327,12 @@ export default function FullScreenNav() {
               Follow
             </p>
             <div className="flex flex-col gap-3 text-sm">
-              <a href="#" className="hover:text-[#d9b879]">Instagram</a>
-              <a href="#" className="hover:text-[#d9b879]">LinkedIn</a>
+              <a href="#" className="hover:text-[#d9b879]">
+                Instagram
+              </a>
+              <a href="#" className="hover:text-[#d9b879]">
+                LinkedIn
+              </a>
             </div>
           </div>
 

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { ReactNode, useEffect } from "react";
@@ -7,30 +8,41 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-interface SmothScrollerProps {
+interface SmoothScrollerProps {
   children: ReactNode;
 }
 
-export default function SmotheScroller({
+export default function SmoothScroller({
   children,
-}: SmothScrollerProps) {
+}: SmoothScrollerProps) {
   useEffect(() => {
     if (window.matchMedia("(max-width: 767px)").matches) return;
-
+  
     let smoother: ScrollSmoother | null = null;
-
-    const frame = requestAnimationFrame(() => {
-      smoother = ScrollSmoother.create({
-        wrapper: "#smooth-wrapper",
-        content: "#smooth-content",
-        smooth: 1.5,
-        effects: true,
-        smoothTouch: 0.1,
+    let raf1 = 0, raf2 = 0;
+  
+    const init = () => {
+      // two frames = after hydration commit has painted
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => {
+          smoother = ScrollSmoother.create({
+            wrapper: "#smooth-wrapper",
+            content: "#smooth-content",
+            smooth: 1.5,
+            effects: true, // applies [data-speed] / [data-lag] for you
+            smoothTouch: 0.1,
+          });
+        });
       });
-    });
-
+    };
+  
+    if (document.readyState === "complete") init();
+    else window.addEventListener("load", init, { once: true });
+  
     return () => {
-      cancelAnimationFrame(frame);
+      window.removeEventListener("load", init);
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
       smoother?.kill();
     };
   }, []);

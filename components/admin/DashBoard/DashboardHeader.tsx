@@ -1,6 +1,6 @@
 export default function DashboardHeader() {
     return (
-      <header className="mb-9 flex flex-wrap items-center justify-between gap-5">
+      <header className="mb-9 flex flex-wrap items-center justify-between gap-5 lg:pt-10">
         <div>
           <p className="mb-2 text-xs text-gray-500">
             Workspace / Overview

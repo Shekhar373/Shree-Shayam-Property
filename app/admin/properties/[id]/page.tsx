@@ -158,7 +158,7 @@ export default function PropertyDetailsPage() {
   const images = property.images || [];
 
   return (
-    <main className="min-h-screen bg-[#f5f6f2] px-4 py-8 text-[#25382d] sm:px-8 lg:px-12">
+    <main className="min-h-screen bg-[#f5f6f2] px-4 py-8 text-[#25382d] sm:px-8 lg:px-12 pt-[10vh]">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <header className="mb-8 flex flex-wrap items-start justify-between gap-5">
