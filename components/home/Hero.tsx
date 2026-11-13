@@ -12,8 +12,8 @@ const Hero = () => {
         autoPlay
         muted
         loop
-        className="absolute top-0 left-0 -z-10 h-full w-full object-cover"
-        src="https://assets.lenvalproperties.com/projects/project-j_src.mp4"
+        className="absolute top-0 left-0 z-10 h-full w-full object-cover"
+        src="/videos/hero.mp4"
       />
 
       {/* <HeroText/> */}
