@@ -218,7 +218,7 @@ export default function PropertyDetailsPage() {
   ].filter((item): item is [string, string] => Boolean(item[1]));
 
   return (
-    <main className="min-h-screen bg-[#F0F1EE] text-[17px] leading-[1.45] tracking-[-0.02em] text-[#0F1110] lg:text-lg">
+    <main className="min-h-screen bg-[#F0F1EE] text-[17px] leading-[1.45] tracking-[-0.02em] text-[#0F1110] lg:text-lg pt-[5vh]">
       <div className="mx-auto max-w-[1500px] px-5 pb-16 pt-3 md:px-10 lg:px-[60px] lg:pb-24 lg:pt-5">
 
         {/* Back navigation and breadcrumb */}

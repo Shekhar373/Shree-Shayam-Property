@@ -255,7 +255,7 @@ export default function FullScreenNav() {
                   {link.number}
                 </span>
 
-                <span className="text-6xl overflow-clip font-medium leading-none tracking-[-0.045em] transition-transform duration-500 group-hover:translate-x-3 font-[heading-font]">
+                <span className="text-4xl lg:text-6xl overflow-clip font-medium leading-none tracking-[-0.045em] transition-transform duration-500 group-hover:translate-x-3 font-[heading-font]">
                   {link.title}
                 </span>
 
