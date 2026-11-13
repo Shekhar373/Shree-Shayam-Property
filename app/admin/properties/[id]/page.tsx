@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type Property = {
   _id: string;
@@ -62,6 +62,7 @@ const formatDate = (date?: string) => {
 
 export default function PropertyDetailsPage() {
   const { id } = useParams<{ id: string }>();
+  const router = useRouter();
 
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
@@ -111,8 +112,8 @@ export default function PropertyDetailsPage() {
       }
 
       // Remove the deleted property from your displayed list.
-      setProperty((prev) => prev.filter((property) => property._id !== id));
-
+      setProperty(null);
+      router.push("/admin/properties");
       alert(result.message);
 
       // router.push("/admin/properties");

@@ -1,25 +1,21 @@
-
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/connectdb";
 import Inquiry from "@/models/Inquiry";
+import type { InquiryStatus } from "@/types/InquiryType";
 import { isAdminAuthenticated } from "@/lib/auth";
 
-const allowedStatuses = [
-  "new",
-  "contacted",
-  "interested",
-  "closed",
-  "spam",
-];
+type RouteContext = {
+  params: Promise<{
+    id: string;
+  }>;
+};
 
-export async function GET(_request, { params }) {
+const allowedStatuses = ["new", "contacted", "interested", "closed", "spam"];
 
+export async function GET(_request: NextRequest, { params }: RouteContext) {
   if (!(await isAdminAuthenticated())) {
-    return NextResponse.json(
-      { message: "Unauthorized" },
-      { status: 401 }
-    );
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
   try {
     const { id } = await params;
@@ -27,7 +23,7 @@ export async function GET(_request, { params }) {
     if (!mongoose.isValidObjectId(id)) {
       return NextResponse.json(
         { message: "Invalid inquiry ID." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -40,7 +36,7 @@ export async function GET(_request, { params }) {
     if (!inquiry) {
       return NextResponse.json(
         { message: "Inquiry not found." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -50,20 +46,16 @@ export async function GET(_request, { params }) {
 
     return NextResponse.json(
       { message: "Failed to retrieve inquiry." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-export async function PATCH(request, { params }) {
-
+export async function PATCH(request: NextRequest, { params }: RouteContext) {
   if (!(await isAdminAuthenticated())) {
-    return NextResponse.json(
-      { message: "Unauthorized" },
-      { status: 401 }
-    );
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-  
+
   try {
     const { id } = await params;
     const body = await request.json();
@@ -71,17 +63,21 @@ export async function PATCH(request, { params }) {
     if (!mongoose.isValidObjectId(id)) {
       return NextResponse.json(
         { message: "Invalid inquiry ID." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const updates = {};
+    const updates: {
+      status?: InquiryStatus;
+      notes?: string;
+      followUpAt?: Date | null;
+    } = {};
 
     if (Object.hasOwn(body, "status")) {
       if (!allowedStatuses.includes(body.status)) {
         return NextResponse.json(
           { message: "Invalid inquiry status." },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -92,7 +88,7 @@ export async function PATCH(request, { params }) {
       if (typeof body.notes !== "string") {
         return NextResponse.json(
           { message: "Notes must be text." },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -108,7 +104,7 @@ export async function PATCH(request, { params }) {
         if (Number.isNaN(date.getTime())) {
           return NextResponse.json(
             { message: "Invalid follow-up date." },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -119,7 +115,7 @@ export async function PATCH(request, { params }) {
     if (Object.keys(updates).length === 0) {
       return NextResponse.json(
         { message: "No valid fields provided." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -128,13 +124,13 @@ export async function PATCH(request, { params }) {
     const inquiry = await Inquiry.findByIdAndUpdate(
       id,
       { $set: updates },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     ).populate("property", "title slug");
 
     if (!inquiry) {
       return NextResponse.json(
         { message: "Inquiry not found." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -144,7 +140,7 @@ export async function PATCH(request, { params }) {
 
     return NextResponse.json(
       { message: "Failed to update inquiry." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

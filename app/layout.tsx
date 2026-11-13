@@ -3,9 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmotheScroller from "@/components/commom/SmotheScroller";
 import Navbar from "@/components/commom/Navbar";
-import SmokeCursor from "../components/commom/SmokeCursor"
+import SmokeCursor from "../components/commom/SmokeCursor";
 import ScrollToTop from "@/components/commom/ScrollToTop";
 import FullScreenNav from "@/components/commom/FullScreenNav";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,19 +30,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col relative"  suppressHydrationWarning>
-      {/* <SmokeCursor
+      <body
+        className="min-h-full flex flex-col relative"
+        suppressHydrationWarning
+      >
+        {/* <SmokeCursor
         color="#595757"
         opacity={0.1}
         mobile={true}
       
       /> */}
-        
-          {/* <Navbar /> */}
-          <FullScreenNav />
+
+        {/* <Navbar /> */}
+        <FullScreenNav />
         <SmotheScroller>
-          <ScrollToTop />
-        {children}
+          <Suspense fallback={null}>
+            <ScrollToTop />
+          </Suspense>
+          {children}
         </SmotheScroller>
       </body>
     </html>

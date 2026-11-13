@@ -6,9 +6,13 @@ import { PropertyTypeData } from "@/types/PropertyType";
 
 export default function PropertyCard(props:PropertyTypeData) {
   const property = props;
-  const formattedPrice = new Intl.NumberFormat("en-IN", {
-    maximumFractionDigits: 2,
-  }).format(property.price ?? 0);
+  const price = Number(property.price ?? 0);
+
+const formattedPrice = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+}).format(Number.isFinite(price) ? price : 0);
 
   // Support backward compatibility: Try to get the first image if available
   const getImageUrl = (): string | null => {
@@ -40,7 +44,7 @@ export default function PropertyCard(props:PropertyTypeData) {
         >
           {getImageUrl() ? (
             <img
-              src={getImageUrl()}
+            src={getImageUrl() || "/images/placeholder.jpg"}
               alt={property.title}
               style={{
                 objectFit: "cover",

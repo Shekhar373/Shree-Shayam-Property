@@ -5,10 +5,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { Inquiry, InquiryStatus, InquiryUpdateData } from "@/types/InquiryType";
 
-const statuses = ["new", "contacted", "interested", "closed", "spam"];
+const statuses: InquiryStatus[] = [
+  "new",
+  "contacted",
+  "interested",
+  "closed",
+  "spam",
+];
 
-const statusStyles = {
+const statusStyles: Record<InquiryStatus, string> = {
   new: "bg-blue-50 text-blue-700",
   contacted: "bg-amber-50 text-amber-700",
   interested: "bg-emerald-50 text-emerald-700",
@@ -20,12 +27,25 @@ export default function InquiryDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
 
-  const [inquiry, setInquiry] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [saving, setSaving] = useState(false);
-  const [notes, setNotes] = useState("");
-  const [followUpAt, setFollowUpAt] = useState("");
+  const [inquiry, setInquiry] = useState<Inquiry | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+  const [saving, setSaving] = useState<boolean>(false);
+  const [notes, setNotes] = useState<string>("");
+  const [followUpAt, setFollowUpAt] = useState<string>("");
+
+
+  const getErrorMessage = (err: unknown): string => {
+    if (axios.isAxiosError<{ message?: string }>(err)) {
+      return err.response?.data?.message || err.message;
+    }
+  
+    if (err instanceof Error) {
+      return err.message;
+    }
+  
+    return "Something went wrong.";
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -35,7 +55,9 @@ export default function InquiryDetailsPage() {
         setLoading(true);
         setError("");
 
-        const response = await axios.get(`/api/inquiry/${id}`);
+        const response = await axios.get<{ inquiry: Inquiry }>(
+          `/api/inquiry/${id}`
+        );
         const data = response.data.inquiry;
 
         setInquiry(data);
@@ -45,11 +67,10 @@ export default function InquiryDetailsPage() {
             ? new Date(data.followUpAt).toISOString().slice(0, 16)
             : ""
         );
-      } catch (err) {
-        setError(
-          err.response?.data?.message || "Failed to load inquiry."
-        );
-      } finally {
+      } catch (err: unknown) {
+        setError(getErrorMessage(err));
+      }
+       finally {
         setLoading(false);
       }
     };
@@ -57,34 +78,38 @@ export default function InquiryDetailsPage() {
     getInquiry();
   }, [id]);
 
-  const updateInquiry = async (updates) => {
+  const updateInquiry = async (updates: InquiryUpdateData): Promise<void> => {
     try {
       setSaving(true);
       setError("");
-
-      const response = await axios.patch(`/api/inquiry/${id}`, updates);
-
-      setInquiry(response.data.inquiry);
-      setNotes(response.data.inquiry.notes || "");
+  
+      const response = await axios.patch<{ inquiry: Inquiry }>(
+        `/api/inquiry/${id}`,
+        updates
+      );
+  
+      const updatedInquiry = response.data.inquiry;
+  
+      setInquiry(updatedInquiry);
+      setNotes(updatedInquiry.notes || "");
+  
       setFollowUpAt(
-        response.data.inquiry.followUpAt
-          ? new Date(response.data.inquiry.followUpAt)
+        updatedInquiry.followUpAt
+          ? new Date(updatedInquiry.followUpAt)
               .toISOString()
               .slice(0, 16)
           : ""
       );
-    } catch (err) {
-      setError(
-        err.response?.data?.message || "Failed to update inquiry."
-      );
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
     } finally {
       setSaving(false);
     }
   };
 
-  const formatDate = (date) => {
+  const formatDate = (date?: string | Date | null): string => {
     if (!date) return "Not available";
-
+  
     return new Date(date).toLocaleString("en-IN", {
       dateStyle: "medium",
       timeStyle: "short",
@@ -287,8 +312,10 @@ export default function InquiryDetailsPage() {
                 id="status"
                 value={inquiry.status}
                 disabled={saving}
-                onChange={(e) =>
-                  updateInquiry({ status: e.target.value })
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  updateInquiry({
+                    status: e.target.value as InquiryStatus,
+                  })
                 }
                 className="w-full rounded-xl border border-[#dfe4da] bg-white px-4 py-3 text-sm outline-none focus:border-[#536e59] disabled:opacity-60"
               >

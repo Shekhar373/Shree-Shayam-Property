@@ -3,6 +3,12 @@ import mongoose from "mongoose";
 import dbConnect from "@/lib/connectdb";
 import Property from "@/models/Property";
 import { isAdminAuthenticated } from "@/lib/auth";
+import cloudinary from "@/lib/cloudinary";
+
+interface PropertyImage {
+  url: string;
+  publicId: string;
+}
 
 export async function GET(
   _request: Request,
@@ -162,7 +168,7 @@ export async function DELETE(
     await Property.findByIdAndDelete(id);
 
     // Then attempt to delete its Cloudinary images.
-    const images = property.images ?? [];
+    const images: PropertyImage[] = property.images ?? [];
 
     const cleanupResults = await Promise.allSettled(
       images
