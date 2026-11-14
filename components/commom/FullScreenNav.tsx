@@ -275,7 +275,7 @@ export default function FullScreenNav() {
             >
               <div className="aspect-[4/4.3] overflow-hidden bg-[#292c27]">
                 <img
-                  src="/images/featured-property.jpg"
+                  src="https://res.cloudinary.com/wvu4f3o2/image/upload/v1794634568/properties/ixvr4h2bnd9e5bscoli7.jpg"
                   alt="Featured property"
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />

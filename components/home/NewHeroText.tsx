@@ -49,7 +49,7 @@ const NewHeroText = () => {
     {/* Explore Properties Button */}
     <Link
       href="/properties"
-      className="group mt-8 inline-flex min-h-12 items-center justify-between gap-6 rounded-full border border-[#fffaf0]/80 px-6 py-3.5 text-[9px] uppercase tracking-[0.2em] transition-colors duration-500 hover:bg-[#fffaf0] hover:text-[#292116] active:scale-[0.98] sm:mt-10 sm:gap-8 sm:px-8 sm:text-[10px] md:mt-10 md:min-h-14 md:px-10 md:text-xs"
+      className="group mt-8 inline-flex min-h-12 items-center justify-between gap-6 rounded-full border border-[#fffaf0]/80 px-4 py-2 text-[9px] uppercase tracking-[0.2em] transition-colors duration-500 hover:bg-[#fffaf0] hover:text-[#292116] active:scale-[0.98] sm:mt-10 sm:gap-8 sm:px-8 sm:text-[10px] md:mt-10 md:min-h-14 md:px-10 md:text-xs"
     >
       <span>Explore Properties</span>
 

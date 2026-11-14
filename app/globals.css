@@ -45,4 +45,8 @@ body{
   font-display: swap;
 }
 
+::selection{
+  background-color: #1A1A1A;
+  color: rgb(255, 255, 255);
+}
 
