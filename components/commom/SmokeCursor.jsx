@@ -55,6 +55,7 @@ const splatShader = `
   uniform float uRadius;
   uniform float uForce;
   uniform int uMode;
+  uniform vec2 uPoint2;
 
   void main() {
     vec4 old = texture2D(uTarget, vUv);
@@ -70,15 +71,27 @@ const splatShader = `
 
       gl_FragColor = vec4(velocity, 0.0, 1.0);
     } else {
-      vec3 dye = old.rgb
-        + uValue * influence * 0.8;
+    // Blend toward the selected smoke color instead of
+    // continuously adding brightness.
+    float amount = influence * 0.5;
 
-      float alpha = max(
-        old.a, influence * 0.85
-      );
+    vec3 dye = mix(
+        old.rgb,
+        uValue,
+        amount
+    );
 
-      gl_FragColor = vec4(dye, alpha);
-    }
+    // Prevent brightness from exceeding the valid range.
+    dye = clamp(dye, 0.0, 1.0);
+
+    // Controlled alpha injection.
+    float alpha = max(
+        old.a,
+        influence * 0.75
+    );
+
+    gl_FragColor = vec4(dye, alpha);
+}
   }
 `;
 
@@ -118,8 +131,10 @@ const displayShader = `
 
     // Soft smoke edges
     float alpha = smoothstep(
-      0.015, 0.45, dye.a
+    0.01, 0.30, dye.a
     ) * uOpacity;
+
+    alpha = clamp(alpha, 0.0, 1.0);
 
     gl_FragColor = vec4(
       dye.rgb,
@@ -224,7 +239,16 @@ export default function SmokeCursor({
     const velocityMaterial = material(velocityShader);
     const splatMaterial = material(splatShader);
     const dyeMaterial = material(dyeShader);
-    const displayMaterial = material(displayShader);
+    const displayMaterial = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader: displayShader,
+      uniforms,
+      transparent: true,
+      blending: THREE.NormalBlending,
+      depthTest: false,
+      depthWrite: false,
+      premultipliedAlpha: false,
+    });
 
     const quad = new THREE.Mesh(
       new THREE.PlaneGeometry(2, 2),
@@ -254,6 +278,9 @@ export default function SmokeCursor({
       py: -2,
       moved: false,
     };
+
+    let lastSplatX = -2;
+    let lastSplatY = -2;
 
     const onMove = (event) => {
       pointer.x = event.clientX / width;
@@ -291,7 +318,7 @@ export default function SmokeCursor({
 
       // 1. Advect velocity and add rotational turbulence.
       uniforms.uVelocity.value = velocity[velocityIndex].texture;
-      uniforms.uDecay.value = Math.exp(-dt * 0.04); // change it to make the smoke disappers fast or slow
+      uniforms.uDecay.value = Math.exp(-dt * 1.5); // change it to make the smoke disappers fast or slow
 
       renderPass(velocity[1 - velocityIndex], velocityMaterial);
       swapVelocity();
@@ -315,7 +342,7 @@ export default function SmokeCursor({
         // 3. Advect the existing smoke.
         uniforms.uDye.value = dye[dyeIndex].texture;
         uniforms.uVelocity.value = velocity[velocityIndex].texture;
-        uniforms.uDecay.value = Math.exp(-dt * 0.7);
+        uniforms.uDecay.value = Math.exp(-dt * 0.9);
 
         renderPass(dye[1 - dyeIndex], dyeMaterial);
         swapDye();
@@ -338,7 +365,7 @@ export default function SmokeCursor({
         // Continue drifting even when the mouse stops.
         uniforms.uDye.value = dye[dyeIndex].texture;
         uniforms.uVelocity.value = velocity[velocityIndex].texture;
-        uniforms.uDecay.value = Math.exp(-dt * 0.03); // change it to adjust the smoke after mouse stops.
+        uniforms.uDecay.value = Math.exp(-dt * 1.0); // change it to adjust the smoke after mouse stops.
 
         renderPass(dye[1 - dyeIndex], dyeMaterial);
         swapDye();

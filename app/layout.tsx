@@ -34,12 +34,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         className="min-h-full flex flex-col relative"
         suppressHydrationWarning
       >
-        {/* <SmokeCursor
-        color="#595757"
-        opacity={0.1}
-        mobile={true}
-      
-      /> */}
+       <SmokeCursor
+  color="#BFC9C2"
+  opacity={0.12}
+  mobile={true}
+/>
 
         {/* <Navbar /> */}
         <FullScreenNav />
