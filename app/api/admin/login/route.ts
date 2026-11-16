@@ -26,14 +26,6 @@ export async function POST(request: Request) {
       email.trim().toLowerCase() !== adminEmail.trim().toLowerCase() ||
       !(await bcrypt.compare(password, passwordHash))
     ) {
-      console.log("Auth Debug:", {
-        emailExists: !!process.env.ADMIN_EMAIL,
-        hashExists: !!process.env.ADMIN_PASSWORD_HASH,
-        emailMatches:
-          email.trim().toLowerCase() ===
-          process.env.ADMIN_EMAIL?.trim().toLowerCase(),
-        hashLength: process.env.ADMIN_PASSWORD_HASH?.length,
-      });
       return NextResponse.json(
         { message: "Invalid email or password." },
         { status: 401 }
