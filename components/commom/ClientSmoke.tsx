@@ -9,5 +9,5 @@ const SmokeCursor = dynamic(
 );
 
 export default function ClientSmoke() {
-  return <SmokeCursor color="#BFC9C2" opacity={0.04} mobile={false} />;
+  return <SmokeCursor color="#BFC9C2" opacity={0.05} mobile={false} />;
 }
